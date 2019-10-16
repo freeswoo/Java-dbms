@@ -12,19 +12,15 @@ public class JdbcEx_04 {
 		ScoreJDBCServiceV2 sc = new ScoreJDBCServiceV2();
 		
 		List<ScoreVO> stdList = sc.selectAll();
-		
 		stdList = sc.findById(30);
 		for(ScoreVO sVO : stdList) {
 			System.out.println(sVO.toString());
 		}
 		
 		stdList = sc.findByName("갈한수");
-		
 		for(ScoreVO sVO : stdList) {
 			System.out.println(sVO.toString());
 		}
-		
-		
 		
 	}
 

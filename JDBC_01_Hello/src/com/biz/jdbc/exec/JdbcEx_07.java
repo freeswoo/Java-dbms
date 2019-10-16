@@ -16,6 +16,7 @@ public class JdbcEx_07 {
 				.s_std("이몽룡")
 				.s_score(100)
 				.s_rem("연습").build();
+		
 		int ret = sc.insert(scoreVO);
 		System.out.println(ret);
 		
@@ -23,5 +24,7 @@ public class JdbcEx_07 {
 		for(ScoreVO s : scList) {
 			System.out.println(s);
 		}
+	
 	}
+
 }

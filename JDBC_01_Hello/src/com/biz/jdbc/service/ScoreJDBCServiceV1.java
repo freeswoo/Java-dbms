@@ -10,13 +10,14 @@ import java.util.List;
 
 import com.biz.jdbc.domain.ScoreVO;
 
-public class ScoreJDBCService {
+public class ScoreJDBCServiceV1 {
 
-	//protected String jdbcDriver = "oracle.jdbc.driver.OracleDriver";
-	//protected String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	//protected String userName = "grade";
-	//protected String password = "grade";
-	protected Connection dbConn = null;
+//	protected String jdbcDriver = "oracle.jdbc.driver.OracleDriver";
+//	protected String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	protected String userName = "grade";
+//	protected String password = "grade";
+	
+	protected Connection dbConn = null ;
 	protected PreparedStatement pStr = null;
 	
 	protected List<ScoreVO> scoreList = null;
@@ -26,10 +27,14 @@ public class ScoreJDBCService {
 	}
 	
 	protected void dbConnection() {
-		
 		try {
-			Class.forName(DBConstract.DB_INFO.jdbcDriver);
-			dbConn = DriverManager.getConnection(url, userName, password);
+			Class.forName(DBConstract.DB_INFO.jdbvDriver);
+			dbConn 
+				= DriverManager.getConnection(
+						DBConstract.DB_INFO.URL,
+						DBConstract.DB_INFO.USER,
+						DBConstract.DB_INFO.PASSWORD);
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,7 +42,6 @@ public class ScoreJDBCService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void selectAll() {
@@ -45,14 +49,14 @@ public class ScoreJDBCService {
 		this.dbConnection();
 		this.scoreList = new ArrayList<ScoreVO>();
 		
-		String sql = " SELECT * FROM tbl_score " ;
+		String sql = " SELECT * FROM tbl_score ";
 		
 		try {
 			pStr = dbConn.prepareStatement(sql);
 			
 			ResultSet rst = pStr.executeQuery();
-			while(rst.next()) { 
-				ScoreVO sVO =  ScoreVO.builder()
+			while(rst.next()) {
+				ScoreVO sVO = ScoreVO.builder()
 						.s_id(rst.getInt(DBConstract.SCORE.S_ID))
 						.s_std(rst.getString(DBConstract.SCORE.S_STD))
 						.s_score(rst.getInt(DBConstract.SCORE.S_SCORE))
@@ -63,12 +67,14 @@ public class ScoreJDBCService {
 			
 			pStr.close();
 			dbConn.close();
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+		
 	}
+	
 	
 }

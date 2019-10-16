@@ -15,7 +15,6 @@ public class JdbcEx_05 {
 		for(ScoreVO sVO : stdList) {
 			System.out.println(sVO.toString());
 		}
-			
 	}
 
 }

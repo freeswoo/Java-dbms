@@ -17,7 +17,6 @@ public class JdbcEx_06 {
 		}
 		
 		
-		
 	}
 
 }

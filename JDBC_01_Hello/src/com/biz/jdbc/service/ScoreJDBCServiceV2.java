@@ -12,11 +12,12 @@ import com.biz.jdbc.domain.ScoreVO;
 
 public class ScoreJDBCServiceV2 {
 
-	//protected String jdbcDriver = "oracle.jdbc.driver.OracleDriver";
-	//protected String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	//protected String userName = "grade";
-	//protected String password = "grade";
-	protected Connection dbConn = null;
+//	protected String jdbcDriver = "oracle.jdbc.driver.OracleDriver";
+//	protected String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	protected String userName = "grade";
+//	protected String password = "grade";
+	
+	protected Connection dbConn = null ;
 	protected PreparedStatement pStr = null;
 	
 	protected List<ScoreVO> scoreList = null;
@@ -26,10 +27,14 @@ public class ScoreJDBCServiceV2 {
 	}
 	
 	protected void dbConnection() {
-		
 		try {
-			Class.forName(DBConstract.DB_INFO.jdbcDriver);
-			dbConn = DriverManager.getConnection(url, userName, password);
+			Class.forName(DBConstract.DB_INFO.jdbvDriver);
+			dbConn 
+				= DriverManager.getConnection(
+						DBConstract.DB_INFO.URL,
+						DBConstract.DB_INFO.USER,
+						DBConstract.DB_INFO.PASSWORD);
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,29 +42,29 @@ public class ScoreJDBCServiceV2 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-	
+
 	public List<ScoreVO> selectAll() {
 		
-		String sql = " SELECT * FROM tbl_score " ;
+		String sql = " SELECT * FROM tbl_score ";
 		this.select(sql);
-		return this.scoreList;		
+		return this.scoreList;
+	
 	}
-		
+	
 	public List<ScoreVO> findById(int s_id) {
-		
-		String sql = " SELECT * FROM tbl_score " ;
+
+		String sql = " SELECT * FROM tbl_score ";
 		sql += " WHERE s_id = " + s_id ;
 		
 		this.select(sql);
 		return this.scoreList;
+		
 	}
 	
 	public List<ScoreVO> findByName(String s_name) {
-		
-		String sql = " SELECT * FROM tbl_score " ;
-		sql += " WHERE s_std = " + s_name + "";
+		String sql = " SELECT * FROM tbl_score ";
+		sql += " WHERE s_std = " + s_name ;
 		this.select(sql);
 		return this.scoreList;
 	}
@@ -73,8 +78,8 @@ public class ScoreJDBCServiceV2 {
 			pStr = dbConn.prepareStatement(sql);
 			
 			ResultSet rst = pStr.executeQuery();
-			while(rst.next()) { 
-				ScoreVO sVO =  ScoreVO.builder()
+			while(rst.next()) {
+				ScoreVO sVO = ScoreVO.builder()
 						.s_id(rst.getInt(DBConstract.SCORE.S_ID))
 						.s_std(rst.getString(DBConstract.SCORE.S_STD))
 						.s_score(rst.getInt(DBConstract.SCORE.S_SCORE))
@@ -85,12 +90,14 @@ public class ScoreJDBCServiceV2 {
 			
 			pStr.close();
 			dbConn.close();
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+		
 	}
+	
 	
 }
