@@ -6,13 +6,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.biz.grade.persistence.ScoreDTO;
 import com.biz.grade.persistence.StudentDTO;
 import com.biz.grade.utils.DBContract;
 
 public class StudentServiceV1 extends StudentService {
 
 	@Override
-	public int insert(StudentDTO StudentDTO) {
+	public int insert(StudentDTO scoreVO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -28,11 +29,11 @@ public class StudentServiceV1 extends StudentService {
 
 		this.dbConnection();
 		PreparedStatement pStr = null;
-		
-		String sql = DBContract.SQL.STUDENT_SELECT ;
+		String sql = DBContract.SQL.STUDENT_SELECT;
 		sql += " WHERE ST_NUM = ? ";
 		
 		try {
+
 			pStr = dbConn.prepareStatement(sql);
 			pStr.setString(1, num);
 			ResultSet rst = pStr.executeQuery();
@@ -42,8 +43,6 @@ public class StudentServiceV1 extends StudentService {
 			StudentDTO sdto = null;
 			if(rst.next()) {
 				 sdto = this.rstTOdto(rst);
-			} else {
-				return null;
 			}
 			rst.close();
 			dbConn.close();
@@ -53,12 +52,15 @@ public class StudentServiceV1 extends StudentService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+				
+		
 		return null;
 	}
 
 	@Override
 	public List<StudentDTO> findByName(String name) {
-		
+
 		this.dbConnection();
 		PreparedStatement pStr = null;
 		
@@ -69,32 +71,33 @@ public class StudentServiceV1 extends StudentService {
 			pStr = dbConn.prepareStatement(sql);
 			pStr.setString(1, name);
 			ResultSet rst = pStr.executeQuery();
-						
+			
 			// stdList를 생성을 하면 stdList가 null 아니다
 			List<StudentDTO> stdList = new ArrayList<StudentDTO>();
 			while(rst.next()) {
 				
-				stdList.add
-//				(StudentDTO.builder()
+				stdList.add(this.rstTOdto(rst)); 
+
+				
+//						StudentDTO.builder()
 //						.st_num(rst.getString("ST_NUM"))
 //						.st_name(rst.getString("ST_NAME"))
 //						.st_addr(rst.getString("ST_ADDR"))
 //						.st_grade(rst.getInt("ST_GRADE"))
 //						.st_tel(rst.getString("ST_TEL"))
 //						.st_dept(rst.getString("ST_DEPT"))
-//						.build());
+//						.build()
+//				);
 			}
 			rst.close();
 			dbConn.close();
-			
+			return stdList;
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		return null;
-		
 	}
 
 	@Override
@@ -104,7 +107,7 @@ public class StudentServiceV1 extends StudentService {
 	}
 
 	@Override
-	public int update(StudentDTO studentVO) {
+	public int update(StudentDTO scoreVO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -114,8 +117,9 @@ public class StudentServiceV1 extends StudentService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	private StudentDTO rstTOdto(ResultSet rst) throws SQLException {
+	
+	private StudentDTO rstTOdto(ResultSet rst) 
+					throws SQLException {
 		
 		return StudentDTO.builder()
 		.st_num(rst.getString("ST_NUM"))
@@ -125,5 +129,8 @@ public class StudentServiceV1 extends StudentService {
 		.st_tel(rst.getString("ST_TEL"))
 		.st_dept(rst.getString("ST_DEPT"))
 		.build();
+		
 	}
+	
+
 }

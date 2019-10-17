@@ -14,10 +14,10 @@ public class ScoreEx_02 {
 		ScoreService sc = new ScoreServiceV1();
 		
 		while(true) {
-			System.out.println("=================");
+			System.out.println("====================");
 			System.out.println("성적처리 v1");
-			System.out.println("==================");
-			System.out.println("찾을 데이터 ID");
+			System.out.println("====================");
+			System.out.print("찾을 데이터 ID >> ");
 			String strId = scanner.nextLine();
 			
 			long s_id = Long.valueOf(strId);
@@ -27,9 +27,7 @@ public class ScoreEx_02 {
 			} else {
 				System.out.println(scoreDTO.toString());
 			}
-			
 		}
-		
 	}
 
 }
