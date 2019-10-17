@@ -16,9 +16,9 @@ public class ScoreEx_01 {
 		
 		if(scoreList == null || scoreList.size() < 1) {
 			System.out.println("데이터가 없습니다");
-
+			
 			// main() method에서 return를 실행하면
-			//프로젝트를 종료하라!!!
+			// 프로젝트를 종료하라!!!
 			return ;
 		}
 		

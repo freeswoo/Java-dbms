@@ -8,15 +8,15 @@ public class DBConnection {
 
 	private static Connection dbConn = null;
 
-	/*
-	 * static 생성자
+	/* static 생성자
 	 * 
 	 * 프로젝트가 시작됨과 동시에
 	 * JVM에 의해서 자동으로 실행되는 클래스와 무관한
 	 * 전역(전체에서 접근 가능한) 생성자 method
+	 * 
 	 */
 	static {
-		
+
 		// DB 연결을 해서 dbConn 을 생성하기
 		String jdbcDriver = DBContract.DBConn.JdbcDriver;
 		String url = DBContract.DBConn.URL;
@@ -24,10 +24,8 @@ public class DBConnection {
 		String password = DBContract.DBConn.PASSWORD;
 
 		try {
-
 			Class.forName(jdbcDriver);
 			dbConn = DriverManager.getConnection(url, user, password);
-
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,7 +35,7 @@ public class DBConnection {
 		}
 	}
 	
-	// 프로젝트가 시작하면서 생성된
+	// 프로젝트가 시작하면서 생성된 
 	// dbConn(연결객체, 인스턴스)를 필요할때
 	// 가져가는 통로 method
 	// dbConn 변수를 직접 접근하지 않고

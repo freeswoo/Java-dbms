@@ -15,9 +15,9 @@ public class ScoreEx_02 {
 		Scanner scanner = new Scanner(System.in);
 		
 		while(true) {
-			System.out.println("====================");
+			System.out.println("======================");
 			System.out.println("이름으로 성적표 검색");
-			System.out.println("====================");
+			System.out.println("======================");
 			System.out.print("이름 (-Q:quit) >> ");
 			String strName = scanner.nextLine();
 			if(strName.equals("-Q")) break;
@@ -28,11 +28,15 @@ public class ScoreEx_02 {
 				System.out.println("학생이름을 다시 입력!!");
 				continue;
 			}
-			
-			for(ScoreVO vo :scoreList) {
+			for(ScoreVO vo : scoreList) {
 				System.out.println(vo.toString());
 			}
+			
 		}
 		System.out.println("Good Bye!!!");
+		
+		
+		
 	}
+
 }
