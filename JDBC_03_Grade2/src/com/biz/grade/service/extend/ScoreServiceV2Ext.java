@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.biz.grade.config.DBContract;
-import com.biz.grade.persistence.ScoreDTO;
-import com.biz.grade.persistence.ScoreVO;
+import com.biz.grade.persistence.domain.ScoreDTO;
+import com.biz.grade.persistence.domain.ScoreVO;
 import com.biz.grade.service.ScoreServiceV2;
 
 public class ScoreServiceV2Ext extends ScoreServiceV2 {
