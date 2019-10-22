@@ -239,7 +239,33 @@ public class BookDaoImp extends BookDao {
 
 	@Override
 	public int update(BookDTO bookDTO) {
-		// TODO Auto-generated method stub
+		
+		PreparedStatement pStr = null;
+		
+		String sql = " UPDATE tbl_books SET ";
+		sql += " B_NAME = ?, ";
+		sql += " B_COMP = ?, ";
+		sql += " B_WRITER = ?, ";
+		sql += " B_PRICE = ? ";
+		sql += " WHERE B_CODE = ? ";
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, bookDTO.getB_name());
+			pStr.setString(2, bookDTO.getB_comp());
+			pStr.setString(3, bookDTO.getB_writer());
+			pStr.setInt(4, bookDTO.getB_price());
+			pStr.setString(5, bookDTO.getB_code());
+			
+			int ret = pStr.executeUpdate();
+			
+			pStr.close();
+			return ret;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 

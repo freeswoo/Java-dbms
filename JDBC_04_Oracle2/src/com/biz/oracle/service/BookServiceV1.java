@@ -66,19 +66,25 @@ public class BookServiceV1 {
 	 */
 	public void searchBookName(boolean bConti) {
 		while(true) {
-			if(this.searchBookName()) break;
+			if(this.searchBookName() != null) break;
 		}
 	}
 
-	public boolean searchBookName() {
+	public String searchBookName() {
 
 		System.out.println("===========================");
 		System.out.println("도서검색");
 		System.out.println("===========================");
 		System.out.print("도서명(-Q:quit) >> ");
 		String strName = scanner.nextLine();
-		if(strName.equals("-Q")) return true;
-			
+		if(strName.equals("-Q")) return "-Q";
+		this.searchBookName(strName);
+		return strName;
+	
+	}
+	
+	public boolean searchBookName(String strName) {
+		
 		List<BookDTO> bookList 
 			= bookDao.findByName(strName);
 			
