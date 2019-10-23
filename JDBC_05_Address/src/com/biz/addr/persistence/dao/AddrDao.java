@@ -24,4 +24,10 @@ public abstract class AddrDao {
 	
 	public abstract List<AddrDTO> findByChain(String chain);
 	
+	public abstract int insert(AddrDTO addrDTO);
+
+	public abstract int delete(long id);
+
+	public abstract int update(AddrDTO addrDTO);
+	
 }

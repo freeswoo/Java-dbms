@@ -138,8 +138,115 @@ public class AddrDaoImp extends AddrDao {
 
 	@Override
 	public List<AddrDTO> findByChain(String chain) {
-		// TODO Auto-generated method stub
+		
+		PreparedStatement pStr = null;
+		String sql = DBContract.SQL.SELECT_ADDR;
+		sql += " WHERE CHAIN = ? ";
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, chain);
+			
+			ResultSet rst = pStr.executeQuery();
+			List<AddrDTO> addrList = new ArrayList<AddrDTO>();
+			while(rst.next()) {
+				addrList.add(this.rst_2_DTO(rst));
+			}
+			rst.close();
+			pStr.close();
+			return addrList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		return null;
+	}
+
+	@Override
+	public int insert(AddrDTO addrDTO) {
+		
+		PreparedStatement pStr = null;
+		String sql = " INSERT INTO tbl_addr( ";
+				sql += " ID,";
+				sql += " NAME,";
+				sql += " TEL,";
+				sql += " ADDR,";
+				sql += " CHAIN)";
+				sql += " VALUES(SEQ_ADDR.NEXTVAL, ?, ?, ?, ?)";
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, addrDTO.getName());
+			pStr.setString(2, addrDTO.getTel());
+			pStr.setString(3, addrDTO.getAddr());
+			pStr.setString(4, addrDTO.getChain());
+			
+			int ret = pStr.executeUpdate();
+			
+			pStr.close();
+			return ret;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
+	@Override
+	public int delete(long id) {
+		
+		PreparedStatement pStr = null;
+		String sql = " DELETE FROM tbl_addr ";
+		sql += " WHERE ID = ? ";
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setLong(1, id);
+			
+			int ret = pStr.executeUpdate();
+			
+			pStr.close();
+			return ret;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int update(AddrDTO addrDTO) {
+		
+		PreparedStatement pStr = null;
+		String sql = " UPDATE tbl_addr SET ";
+				sql += " NAME = ?,";
+				sql += " TEL = ?,";
+				sql += " ADDR = ?,";
+				sql += " CHAIN = ? ";
+				sql += " WHERE ID = ? ";
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, addrDTO.getName());
+			pStr.setString(2, addrDTO.getTel());
+			pStr.setString(3, addrDTO.getAddr());
+			pStr.setString(4, addrDTO.getChain());
+			pStr.setLong(5, addrDTO.getId());
+			
+			int ret = pStr.executeUpdate();
+			
+			pStr.close();
+			return ret;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }

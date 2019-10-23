@@ -19,6 +19,7 @@ public class AddrDTO {
 	private long id;
 	private String name;
 	private String tel;
+	private String addr;
 	private String chain;
 	
 }

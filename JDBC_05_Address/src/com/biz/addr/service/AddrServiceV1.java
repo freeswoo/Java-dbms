@@ -13,6 +13,7 @@ public class AddrServiceV1 {
 	Scanner scanner = null;
 	String strName = null;
 	String strTel = null;
+	String strChain = null;
 	public AddrServiceV1() {
 		
 		scanner = new Scanner(System.in);
@@ -80,6 +81,26 @@ public class AddrServiceV1 {
 		
 		this.viewList(addrList);
 		return strTel;
+	}
+	
+public String searchAddrChain() {
+		
+		System.out.println("================");
+		System.out.println("관계검색");
+		System.out.println("================");
+		System.out.print("관계(-Q:quit) >> ");
+		strChain = scanner.nextLine();
+		if(strChain.equals("-Q")) return "-Q";
+		
+		List<AddrDTO> addrList = addrDao.findByChain(strChain);
+		
+		if(addrList == null || addrList.size() < 1) {
+			System.out.println("찾는 관계 없음!!");
+			return "-Q";
+		}
+		
+		this.viewList(addrList);
+		return strChain;
 	}
 
 
