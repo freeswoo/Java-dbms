@@ -13,7 +13,10 @@ public class BookServiceV1 {
 	Scanner scanner;
 
 	public BookServiceV1() {
-		bookDao = DBConnection.getSqlSessionFactory().openSession(true).getMapper(BookDao.class);
+		bookDao = DBConnection
+				.getSqlSessionFactory()
+				.openSession(true)
+				.getMapper(BookDao.class);
 		scanner = new Scanner(System.in);
 	}
 
