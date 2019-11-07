@@ -2,7 +2,6 @@ package com.biz.rent.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;

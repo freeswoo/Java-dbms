@@ -15,12 +15,12 @@ import lombok.ToString;
 @Builder
 public class CBTDTO {
 
-	private int cb_code;	//	number
-	private String cb_quiz;	//	nvarchar2(125 char)
-	private String cb_ex01;	//	nvarchar2(125 char)
-	private String cb_ex02;	//	nvarchar2(125 char)
-	private String cb_ex03;	//	nvarchar2(125 char)
-	private String cb_ex04;	//	nvarchar2(125 char)
+	private int cb_code;		//	number
+	private String cb_quiz;		//	nvarchar2(125 char)
+	private String cb_ex01;		//	nvarchar2(125 char)
+	private String cb_ex02;		//	nvarchar2(125 char)
+	private String cb_ex03;		//	nvarchar2(125 char)
+	private String cb_ex04;		//	nvarchar2(125 char)
 	private String cb_answer;	//	nvarchar2(125 char)
 	
 }
