@@ -21,7 +21,8 @@ public class CBTServiceV1 {
 				.openSession(true)
 				.getMapper(CBTDao.class);
 		scan = new Scanner(System.in);
-		
+		List<CBTVO> oList = new ArrayList<CBTVO>();
+		List<CBTVO> xList = new ArrayList<CBTVO>();
 	}
 	
 	public void Menu() {
@@ -105,8 +106,9 @@ public class CBTServiceV1 {
 			
 			int aNums = 1;
 			String[] a = new String[5];
+			
 			for(String s : vo.getCb_qnums()) {
-				a[aNums] += s;
+				a[aNums-1] = s;
 				System.out.print(aNums++ + ":");
 				System.out.println(s);
 			}
@@ -117,10 +119,18 @@ public class CBTServiceV1 {
 				intAns++ ;
 				if(a[intAns].equals(vo.getCb_answer())) {
 					System.out.println("정답입니다!!");
+					System.out.println();
 					Point += 5;
 					
+					List<CBTVO> oList = qandAList; // 정답리스트
+					System.out.println(oList);// 확인작업 나중에 삭제
 				} else {
 					System.out.println("틀렸습니다!!");
+					System.out.println();
+					
+					List<CBTVO> xList = qandAList; // 오답리스트
+					System.out.println(xList); //확인작업 나중에 삭제
+					
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -130,5 +140,6 @@ public class CBTServiceV1 {
 			
 		}
 	}
+	
 	
 }
