@@ -7,6 +7,12 @@ import com.biz.cbt.persistence.CBTDTO;
 public interface CBTDao {
 
 	public List<CBTDTO> selectAll();
-
 	
+	public CBTDTO findById(String strCode);
+	public String getMaxCBCode();
+
+	public int delete(String strCode);
+	public int update(CBTDTO dto);
+	public int insert(CBTDTO dto);
+
 }

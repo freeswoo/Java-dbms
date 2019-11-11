@@ -15,14 +15,18 @@ public class CBTServiceV1 {
 	protected CBTDao dao;
 	protected Scanner scan;
 	protected int Point = 0;
+	List<CBTVO> oList;
+	List<CBTVO> xList;
+	CBT_CRUDServiceV1 ccs = new CBT_CRUDServiceV1();
+	
 	{
 		dao = DBConnection
 				.getSqlSessionFactory()
 				.openSession(true)
 				.getMapper(CBTDao.class);
 		scan = new Scanner(System.in);
-		List<CBTVO> oList = new ArrayList<CBTVO>();
-		List<CBTVO> xList = new ArrayList<CBTVO>();
+		oList = new ArrayList<CBTVO>();
+		xList = new ArrayList<CBTVO>();
 	}
 	
 	public void Menu() {
@@ -35,7 +39,7 @@ public class CBTServiceV1 {
 			int intMenu = Integer.valueOf(strMenu);
 			if(intMenu == 0) return;
 			else if(intMenu == 1) {
-				this.inputMenu();
+				ccs.inputMenu();
 			} else if(intMenu == 2) {
 				this.quiz();
 			}
@@ -43,26 +47,7 @@ public class CBTServiceV1 {
 			// TODO: handle exception
 		}
 	}
-	public void inputMenu() {
-		System.out.println("=========================");
-		System.out.println("1.문제등록  2.문제수정  3.문제삭제  0.종료");
-		System.out.println("=========================");
-		System.out.print("선택 >> ");
-		String strMenu = scan.nextLine();
-		try {
-			int intMenu = Integer.valueOf(strMenu);
-			if(intMenu == 0) return;
-			else if(intMenu == 1) {
-				this.insert();
-			} else if(intMenu == 2) {
-				this.update();
-			} else if(intMenu == 3) {
-				this.delete();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
+	
 	public void quiz() {
 		List<CBTDTO> cbtList = dao.selectAll();
 		if(cbtList == null || cbtList.size() < 1) {
@@ -97,11 +82,15 @@ public class CBTServiceV1 {
 			
 		}
 		Collections.shuffle(qandAList);
-		int nums = 1;
+		int nums = 0;
+		int count = 0;
+		
 		for(CBTVO vo : qandAList) {
-			System.out.print(nums++ + ":");
+			boolean b = true;
+			nums++;
+			while(b) {
+			System.out.print(nums + ":");
 			System.out.println(vo.getCb_quiz());
-			
 			Collections.shuffle(vo.getCb_qnums());
 			
 			int aNums = 1;
@@ -118,26 +107,39 @@ public class CBTServiceV1 {
 				int intAns = Integer.valueOf(strAns);
 				intAns++ ;
 				if(a[intAns].equals(vo.getCb_answer())) {
-					System.out.println("정답입니다!!");
+					System.out.print("정답입니다!!");
 					System.out.println();
 					Point += 5;
-					
+					count ++;
 					List<CBTVO> oList = qandAList; // 정답리스트
 					System.out.println(oList);// 확인작업 나중에 삭제
-				} else {
-					System.out.println("틀렸습니다!!");
-					System.out.println();
+					b = false;
 					
+				} else {
+					System.out.print("※ 틀렸습니다(R:다시풀기,N:다음문제풀기 >> ");
+					String strR_N = scan.nextLine();
+					if(strR_N.equals("R")) {
+						continue;
+					}
+					count ++;
 					List<CBTVO> xList = qandAList; // 오답리스트
 					System.out.println(xList); //확인작업 나중에 삭제
-					
+					b = false;
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-			
-			
+			}
+			if(count % 5 == 0 ) {
+				System.out.println("맞춘문제");
+				System.out.println("========================================");
+				System.out.println(oList);
+				System.out.println("틀린문제");
+				System.out.println(xList);
+				
+				
+			}
 		}
 	}
 	
